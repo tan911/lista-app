@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import { Archivo } from 'next/font/google'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -10,6 +11,12 @@ import { Button } from '@/components/ui/button'
 const SignInSchema = z.object({
     email: z.string().email(),
     password: z.string(),
+})
+
+const archivo = Archivo({
+    weight: ['400', '800', '700', '600', '900'],
+    subsets: ['latin'],
+    display: 'swap',
 })
 
 export default function Page() {
@@ -28,7 +35,9 @@ export default function Page() {
     return (
         <>
             <div className="mb-8 px-1.5">
-                <h1 className="text-center text-xl tracking-tight font-bold sm:text-left">
+                <h1
+                    className={`text-center text-3xl text-neutral-800 tracking-tight font-black sm:text-left ${archivo.className}`}
+                >
                     Log in account
                 </h1>
                 <p className="text-center text-base font-normal sm:text-left">
@@ -55,7 +64,7 @@ export default function Page() {
                                         </FormLabel>
                                         <FormControl>
                                             <Input
-                                                className="border-none outline-none p-0 h-6 focus-visible:ring-none focus-visible:ring-0"
+                                                className={`border-none outline-none text-lg text-neutral-600 p-0 h-6 font-bold placeholder:text-neutral-400/70 focus-visible:ring-none focus-visible:ring-0 ${archivo.className}`}
                                                 id="email"
                                                 type="email"
                                                 placeholder="your@email.com"
@@ -77,7 +86,7 @@ export default function Page() {
                                         </FormLabel>
                                         <FormControl>
                                             <Input
-                                                className="border-none outline-none p-0 h-6 focus-visible:ring-none focus-visible:ring-0"
+                                                className={`border-none outline-none text-lg text-neutral-600 p-0 h-6 font-bold placeholder:text-neutral-400/70 focus-visible:ring-none focus-visible:ring-0 ${archivo.className}`}
                                                 id="password"
                                                 type="password"
                                                 placeholder="••••••••••••"
@@ -92,7 +101,7 @@ export default function Page() {
                             <Button
                                 type="submit"
                                 variant={'default'}
-                                className="w-full rounded-lg focus-visible:outline-none focus-visible:ring-0 md:h-11"
+                                className={`w-full rounded-lg font-bold text-md tracking-wide bg-gradient-to-r from-neutral-700 to-neutral-800 transition-hover ease-in-out delay-150 hover:from-neutral-600 hover:to-neutral-900 focus-visible:outline-none focus-visible:ring-0 md:h-11 ${archivo.className}`}
                             >
                                 Continue
                             </Button>
