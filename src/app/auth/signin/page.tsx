@@ -1,17 +1,15 @@
 'use client'
+
 import Link from 'next/link'
-import { Archivo } from 'next/font/google'
-import { useForm, SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
+import { Archivo } from 'next/font/google'
+import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-
-const SignInSchema = z.object({
-    email: z.string().email(),
-    password: z.string(),
-})
+import { SigninFormSchema } from '@/lib/definitions'
+import { signin } from '@/app/_actions/authentication'
+import Submit from '../_components/submit'
 
 const archivo = Archivo({
     weight: ['400', '800', '700', '600', '900'],
@@ -20,17 +18,13 @@ const archivo = Archivo({
 })
 
 export default function Page() {
-    const form = useForm<z.infer<typeof SignInSchema>>({
-        resolver: zodResolver(SignInSchema),
+    const form = useForm<z.infer<typeof SigninFormSchema>>({
+        resolver: zodResolver(SigninFormSchema),
         defaultValues: {
             email: '',
             password: '',
         },
     })
-
-    const handleFormSubmit: SubmitHandler<z.infer<typeof SignInSchema>> = (data) => {
-        console.log(data)
-    }
 
     return (
         <>
@@ -52,7 +46,7 @@ export default function Page() {
             </div>
             <div>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(handleFormSubmit)}>
+                    <form action={signin}>
                         <FormField
                             control={form.control}
                             name="email"
@@ -98,13 +92,7 @@ export default function Page() {
                             )}
                         />
                         <FormItem className="mt-2 rounded-lg p-1.5 focus-within:bg-neutral-200/80 md:mt-5">
-                            <Button
-                                type="submit"
-                                variant={'default'}
-                                className={`w-full rounded-lg font-bold text-md tracking-wide bg-gradient-to-r from-neutral-700 to-neutral-800 transition-hover ease-in-out delay-150 hover:from-neutral-600 hover:to-neutral-900 focus-visible:outline-none focus-visible:ring-0 md:h-11 ${archivo.className}`}
-                            >
-                                Continue
-                            </Button>
+                            <Submit message="continue" classname={archivo.className} />
                         </FormItem>
                     </form>
                 </Form>
