@@ -1,40 +1,14 @@
 'use client'
 import Link from 'next/link'
 import { Archivo } from 'next/font/google'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
+import { signup } from '@/app/_actions/authentication'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-
-export const hasUppercase = /(?=.*[A-Z])/g
-export const hasLowercase = /(?=.*[a-z])/g
-export const hasNumber = /(?=.*\d)/g
-export const hasSpecialChars = /(?=.*[!<>@#$%^&*])/g
-export const greaterThanSevenChars = /^(?=.{8,})/g
-
-const PasswordSchema = z
-    .string()
-    .min(1, { message: 'Password is a required field' })
-    .min(7, { message: 'Password must be at least 8 characters' })
-    .regex(hasLowercase, 'Password must contain at least 1 lowercase letter')
-    .regex(hasUppercase, 'Password must contain at least 1 uppercase letter')
-    .regex(hasNumber, 'Password must contain at least 1 number')
-    .regex(hasSpecialChars, 'Password must contain at least 1 symbol')
-
-const SignUpSchema = z.object({
-    name: z.string().min(1, {
-        message: 'Name is a required field',
-    }),
-    email: z
-        .string()
-        .min(1, {
-            message: 'Email is a required field',
-        })
-        .email(),
-    password: PasswordSchema,
-})
+import { SignupFormSchema } from '@/lib/definitions'
 
 const archivo = Archivo({
     weight: ['400', '800', '700', '600', '900'],
@@ -43,18 +17,14 @@ const archivo = Archivo({
 })
 
 export default function Page() {
-    const form = useForm<z.infer<typeof SignUpSchema>>({
-        resolver: zodResolver(SignUpSchema),
+    const form = useForm<z.infer<typeof SignupFormSchema>>({
+        resolver: zodResolver(SignupFormSchema),
         defaultValues: {
             name: '',
             email: '',
             password: '',
         },
     })
-
-    const handleFormSubmit: SubmitHandler<z.infer<typeof SignUpSchema>> = (data) => {
-        console.log(data)
-    }
 
     return (
         <>
@@ -76,7 +46,7 @@ export default function Page() {
             </div>
             <div>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(handleFormSubmit)}>
+                    <form action={signup}>
                         <FormField
                             control={form.control}
                             name="name"
