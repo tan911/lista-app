@@ -1,6 +1,6 @@
 name: Application CI
 on:
-    pull-request:
+    pull_request:
         types: opened
         branch: main
         paths-ignore:
