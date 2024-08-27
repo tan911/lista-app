@@ -1,0 +1,45 @@
+name: Application CI
+on:
+    pull-request:
+        types: opened
+        branch: main
+        paths-ignore:
+            - './github/worklows/*'
+            - '*.md'
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Get code
+              uses: actions/checkout@v4
+
+            - name: Set up node environment
+              uses: actions/setup-node@v4
+              with:
+                  node-version: latest
+
+            - name: Install packages
+              run: npm ci
+
+            - name: Format code
+              run: npm run format
+
+            - name: Lint code
+              run: npm run lint
+
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Get code
+              uses: actions/checkout@v4
+
+            - name: Set up node environment
+              uses: actions/setup-node@v4
+              with:
+                  node-version: latest
+
+            - name: Install packages
+              run: npm ci
+
+            - name: Test code
+              run: npm run test
