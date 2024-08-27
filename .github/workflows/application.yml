@@ -21,13 +21,11 @@ jobs:
             - name: Install packages
               run: npm ci
 
-            - name: Format code
-              run: npm run format
-
             - name: Lint code
               run: npm run lint
 
     test:
+        needs: lint
         runs-on: ubuntu-latest
         steps:
             - name: Get code
