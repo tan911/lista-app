@@ -53,7 +53,7 @@ export default function Page() {
                             render={({ field }) => (
                                 <FormItem className="rounded-lg p-1.5 focus-within:bg-neutral-200/60">
                                     <FormItem className="border space-y-0 px-3 py-2 rounded-lg bg-white focus-within:border-neutral-800">
-                                        <FormLabel htmlFor="email" className="text-neutral-400">
+                                        <FormLabel htmlFor="name" className="text-neutral-400">
                                             Name
                                         </FormLabel>
                                         <FormControl>
